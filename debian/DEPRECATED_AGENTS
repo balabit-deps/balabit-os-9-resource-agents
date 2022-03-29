@@ -1,0 +1,13 @@
+# Deprecated agents
+
+All the agents listed below are no longer maintained upstream and their use is
+discouraged. They might be removed in future releases.
+
+* Evmsd: EVMS is no longer actively maintained and should not be used.
+* EvmsSCC: EVMS is no longer actively maintained and should not be used.
+* LinuxSCSI: This agent makes use of Linux SCSI hot-plug functionality which has
+  been superseded by SCSI reservations.
+* pingd: It was superseded by ocf:pacemaker:pingd.
+* scsi2reservation: It depends on scsi_reserve which is not supported
+  (SCSI-2 reservation is not supported, please use SCSI-3 reservation. That can
+  be achieved with the sg_persist resource agent)

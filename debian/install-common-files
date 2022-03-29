@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# This script aims to install all the common files used by resource-agents-base
+# and resource-agents-extra into resource-agents-common binary package.
+
+set -x
+
+readonly RESOURCE_AGENTS_EXTRA_DIR="debian/resource-agents-extra"
+readonly RESOURCE_AGENTS_COMMON_DIR="debian/resource-agents-common"
+
+readonly COMMON_DIRS="usr/include/heartbeat usr/lib/heartbeat
+                      usr/lib/ocf/lib/heartbeat usr/share/pkgconfig etc/ha.d
+		      lib/systemd/system usr/sbin usr/share/man/man8
+		      usr/lib/tmpfiles.d"
+
+for dir in $COMMON_DIRS; do
+  mkdir -p "$RESOURCE_AGENTS_COMMON_DIR/$dir"
+  mv "$RESOURCE_AGENTS_EXTRA_DIR/$dir"/* "$RESOURCE_AGENTS_COMMON_DIR/$dir"
+done
+
+mkdir -p "$RESOURCE_AGENTS_COMMON_DIR"/usr/lib/ocf/resource.d/heartbeat \
+	 "$RESOURCE_AGENTS_COMMON_DIR"/usr/share/resource-agents/ocft
+
+readonly TARGETS="ocf-binaries ocf-directories ocf-returncodes ocf-shellfuncs"
+for tgt in $TARGETS; do
+  ln -r -s -T "$RESOURCE_AGENTS_COMMON_DIR/usr/lib/ocf/lib/heartbeat/$tgt" \
+              "$RESOURCE_AGENTS_COMMON_DIR/usr/lib/ocf/resource.d/heartbeat/.$tgt"
+  rm "$RESOURCE_AGENTS_EXTRA_DIR/usr/lib/ocf/resource.d/heartbeat/.$tgt"
+done
+
+readonly FILES="metadata.rng ra-api-1.dtd"
+for file in $FILES; do
+  mv "$RESOURCE_AGENTS_EXTRA_DIR/usr/share/resource-agents/$file" \
+     "$RESOURCE_AGENTS_COMMON_DIR"/usr/share/resource-agents/
+done
+
+readonly OCFT_FILES="README README.zh_CN caselib helpers.sh runocft runocft.prereq"
+for file in $OCFT_FILES; do
+  mv "$RESOURCE_AGENTS_EXTRA_DIR/usr/share/resource-agents/ocft/$file" \
+     "$RESOURCE_AGENTS_COMMON_DIR"/usr/share/resource-agents/ocft/
+done

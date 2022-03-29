@@ -1,0 +1,11 @@
+# ignore manpage warnings
+resource-agents-common: no-manual-page usr/sbin/ocft
+resource-agents-common: no-manual-page usr/sbin/sfex_stat
+
+# these are sourced shell libraries:
+resource-agents-common: script-not-executable usr/lib/ocf/lib/heartbeat/findif.sh
+resource-agents-common: script-not-executable usr/lib/ocf/lib/heartbeat/mysql-common.sh
+
+# ignore notices about usr/lib
+resource-agents-common: executable-in-usr-lib usr/lib/heartbeat/*
+resource-agents-common: repeated-path-segment lib usr/lib/ocf/lib/

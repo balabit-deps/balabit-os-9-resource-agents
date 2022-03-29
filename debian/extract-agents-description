@@ -1,0 +1,44 @@
+#!/bin/bash
+
+set -x
+
+export LC_ALL=C
+
+agents=()
+curated_agents=()
+non_curated_agents=()
+
+readonly RESOURCE_AGENTS_EXTRA_DIR="debian/resource-agents-extra"
+readonly RESOURCE_AGENTS_COMMON_DIR="debian/resource-agents-common"
+readonly RESOURCE_AGENTS_BASE_DIR="debian/resource-agents-base"
+readonly NON_CURATED_HEARTBEAT_DIR="$RESOURCE_AGENTS_EXTRA_DIR/usr/lib/ocf/resource.d/heartbeat"
+readonly CURATED_HEARTBEAT_DIR="$RESOURCE_AGENTS_BASE_DIR/usr/lib/ocf/resource.d/heartbeat"
+
+export OCF_ROOT="$RESOURCE_AGENTS_COMMON_DIR/usr/lib/ocf"
+
+for agent in $CURATED_HEARTBEAT_DIR/* $NON_CURATED_HEARTBEAT_DIR/*; do
+  name=$(basename "$agent")
+  short_desc=$("$agent" meta-data | xml_grep --root resource-agent/shortdesc --text_only /dev/stdin)
+
+  # Remove unwanted whitespaces
+  short_desc=$(echo -e $short_desc | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
+
+  # Limit the size of the string to 80 characters
+  desc=$(echo -n "$name: $short_desc" | sed -e 's/^\(.\{75\}\).\{4\}.*/\1.../')
+
+  agents+=("$desc")
+done
+
+for agent in "${agents[@]}"; do
+  if grep -qFx $(cut -d: -f1 <<< "$agent") debian/curated-agents; then
+    curated_agents+=("$agent\${Newline}")
+  else
+    non_curated_agents+=("$agent\${Newline}")
+  fi
+done
+
+echo "agents=${non_curated_agents[*]}" >> debian/resource-agents-extra.substvars
+echo "curatedAgents=${curated_agents[*]}" >> debian/resource-agents-base.substvars
+
+# Clean up pycache
+rm -rf debian/resource-agents-common/usr/lib/ocf/lib/heartbeat/__pycache__

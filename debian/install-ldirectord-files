@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# This script aims to install all the ldirectord files into its own binary package.
+
+set -x
+
+readonly RESOURCE_AGENTS_EXTRA_DIR="debian/resource-agents-extra"
+readonly LDIRECTORD_DIR="debian/ldirectord"
+
+mkdir -p $LDIRECTORD_DIR/etc/ha.d/resource.d \
+	 $LDIRECTORD_DIR/etc/init.d \
+	 $LDIRECTORD_DIR/etc/logrotate.d \
+	 $LDIRECTORD_DIR/lib/systemd/system \
+	 $LDIRECTORD_DIR/usr/sbin \
+	 $LDIRECTORD_DIR/usr/share/man/man8
+
+cp debian/ldirectord.cf $LDIRECTORD_DIR/etc/ha.d
+mv $RESOURCE_AGENTS_EXTRA_DIR/etc/ha.d/resource.d/ \
+   $LDIRECTORD_DIR/etc/ha.d/
+mv $RESOURCE_AGENTS_EXTRA_DIR/etc/init.d $LDIRECTORD_DIR/etc/
+mv $RESOURCE_AGENTS_EXTRA_DIR/etc/logrotate.d $LDIRECTORD_DIR/etc/
+mv $RESOURCE_AGENTS_EXTRA_DIR/lib/systemd/system/ldirectord.service \
+   $LDIRECTORD_DIR/lib/systemd/system/
+mv $RESOURCE_AGENTS_EXTRA_DIR/usr/sbin/ldirectord $LDIRECTORD_DIR/usr/sbin
+mv $RESOURCE_AGENTS_EXTRA_DIR/usr/share/man/man8/ldirectord.8 \
+   $LDIRECTORD_DIR/usr/share/man/man8/

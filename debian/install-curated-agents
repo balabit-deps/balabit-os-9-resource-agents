@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# This script aims to install all the agents curated by the Ubuntu community
+# into resource-agents-base binary package.
+
+set -x
+
+readonly RESOURCE_AGENTS_BASE="debian/resource-agents-base"
+readonly RESOURCE_AGENTS_EXTRA="debian/resource-agents-extra"
+
+mkdir -p $RESOURCE_AGENTS_BASE/usr/share/resource-agents/ocft/configs/ \
+	 $RESOURCE_AGENTS_BASE/usr/share/man/man7/ \
+	 $RESOURCE_AGENTS_BASE/usr/lib/ocf/resource.d/heartbeat/
+
+for agent in $(cat debian/curated-agents); do
+  mv $RESOURCE_AGENTS_EXTRA/usr/lib/ocf/resource.d/heartbeat/$agent \
+     $RESOURCE_AGENTS_BASE/usr/lib/ocf/resource.d/heartbeat/
+  mv $RESOURCE_AGENTS_EXTRA/usr/share/man/man7/ocf_heartbeat_$agent.7 \
+     $RESOURCE_AGENTS_BASE/usr/share/man/man7/
+
+  if [ -f $RESOURCE_AGENTS_EXTRA/usr/share/resource-agents/ocft/configs/$agent ]; then
+    mv $RESOURCE_AGENTS_EXTRA/usr/share/resource-agents/ocft/configs/$agent \
+       $RESOURCE_AGENTS_BASE/usr/share/resource-agents/ocft/configs/
+  fi
+done

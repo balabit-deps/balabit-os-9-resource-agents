@@ -1,0 +1,5 @@
+# ignore manpage warnings
+resource-agents-extra: groff-message usr/share/man/man7/ocf_heartbeat_openstack-info.7.gz 37: warning [p 1, 2.3i]: can't break line
+
+# ignore notices about usr/lib
+resource-agents-extra: executable-in-usr-lib usr/lib/ocf/resource.d/heartbeat/*

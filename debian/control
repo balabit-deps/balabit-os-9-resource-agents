@@ -1,0 +1,153 @@
+Source: resource-agents
+Section: admin
+Priority: optional
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: Debian HA Maintainers <debian-ha-maintainers@alioth-lists.debian.net>
+Uploaders: Adrian Vondendriesch <adrian.vondendriesch@credativ.de>,
+           Valentin Vidic <vvidic@debian.org>
+Build-Depends: autoconf,
+               automake,
+               cluster-glue-dev,
+               debhelper-compat (= 13),
+               dh-exec,
+               dh-python,
+               docbook-xml,
+               docbook-xsl,
+               gawk,
+               libglib2.0-dev,
+               liblrm2-dev (>= 1.0.12~),
+               libnet1-dev,
+               libpils2-dev (>= 1.0.12~),
+               libplumb2-dev (>= 1.0.12~),
+               libplumbgpl2-dev (>= 1.0.12~),
+               libstonith1-dev (>= 1.0.12~),
+               libtool,
+               libxml2-utils,
+               net-tools,
+               pkg-config,
+               python3,
+#              for systemd.pc:
+               systemd [linux-any],
+               xsltproc,
+               xml-twig-tools,
+Rules-Requires-Root: no
+Standards-Version: 4.5.1
+Homepage: https://github.com/ClusterLabs/resource-agents
+Vcs-Browser: https://salsa.debian.org/ha-team/resource-agents
+Vcs-Git: https://salsa.debian.org/ha-team/resource-agents.git
+
+Package: resource-agents
+Architecture: all
+Section: oldlibs
+Depends: ${misc:Depends},
+         resource-agents-base (>= ${source:Version}),
+         resource-agents-extra (>= ${source:Version})
+Description: Transitional package for the resource-agents
+ This package contains cluster resource agents (RAs) compliant with the Open
+ Cluster Framework (OCF) specification, used to interface with various services
+ in a High Availability environment managed by the Pacemaker resource manager.
+ .
+ This is a transitional package which provides a set of curated
+ (resource-agents-base) and non-curated (resource-agents-extra) agents.
+
+Package: resource-agents-extra
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${python3:Depends},
+         cluster-glue,
+         gawk,
+         python3,
+         resource-agents-common (>= ${source:Version})
+Recommends: libxml2-utils,
+            net-tools,
+            resource-agents-base (>= ${source:Version})
+Suggests: python3-googleapi
+Replaces: cluster-agents (<= 1:1.0.4-1),
+          rgmanager (<= 3.0.12-2+b1),
+          resource-agents (<< 1:4.7.0-1ubuntu2)
+Breaks: resource-agents (<< 1:4.7.0-1ubuntu2)
+Conflicts: cluster-agents (<= 1:1.0.4-1), rgmanager (<= 3.0.12-2+b1)
+Description: Cluster Resource Agents
+ This package contains cluster resource agents (RAs) compliant with the Open
+ Cluster Framework (OCF) specification, used to interface with various services
+ in a High Availability environment managed by the Pacemaker resource manager.
+ .
+ Agents included:
+  ${agents}
+
+Package: resource-agents-base
+Architecture: all
+Depends: ${misc:Depends},
+         resource-agents-common (>= ${source:Version})
+Suggests:
+# for iscsi agent
+          open-iscsi,
+# for iSCSITarget and iSCSILogicalUnit agents (the recommended implementation is lio-t)
+          targetcli-fb,
+# for LVM-activate agent
+          dmsetup,
+          lvm2
+Replaces: cluster-agents (<= 1:1.0.4-1),
+          rgmanager (<= 3.0.12-2+b1),
+          resource-agents (<< 1:4.7.0-1ubuntu2)
+Breaks: resource-agents (<< 1:4.7.0-1ubuntu2)
+Conflicts: cluster-agents (<= 1:1.0.4-1),
+           rgmanager (<= 3.0.12-2+b1)
+Description: Cluster Resource Agents curated by Ubuntu
+ This package contains cluster resource agents (RAs) compliant with the Open
+ Cluster Framework (OCF) specification, used to interface with various services
+ in a High Availability environment managed by the Pacemaker resource manager.
+ .
+ This package contains the Resource Agents that are curated by the Ubuntu
+ Server team.
+ .
+ Agents included:
+  ${curatedAgents}
+
+Package: resource-agents-common
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, ${python3:Depends}
+Replaces: cluster-agents (<= 1:1.0.4-1),
+          rgmanager (<= 3.0.12-2+b1),
+          resource-agents-dev (<< 1:3.9.6),
+          resource-agents (<< 1:4.7.0-1ubuntu2)
+Breaks: resource-agents (<< 1:4.7.0-1ubuntu2)
+Conflicts: cluster-agents (<= 1:1.0.4-1),
+           rgmanager (<= 3.0.12-2+b1),
+           resource-agents-dev (<< 1:3.9.6)
+Provides: resource-agents-dev
+Description: Common files used by the Cluster Resource Agents
+ This package contains cluster resource agents (RAs) compliant with the Open
+ Cluster Framework (OCF) specification, used to interface with various services
+ in a High Availability environment managed by the Pacemaker resource manager.
+ .
+ This package provides common files used by the Resource Agents.
+
+Package: ldirectord
+Architecture: all
+Depends: ipvsadm,
+         lsb-base,
+         libauthen-radius-perl,
+         libcrypt-ssleay-perl,
+         libdbi-perl,
+         libdigest-hmac-perl,
+         libdigest-md5-perl,
+         libio-socket-inet6-perl,
+         libmail-pop3client-perl,
+         libmailtools-perl,
+         libnet-dns-perl,
+         libnet-imap-simple-perl,
+         libnet-imap-simple-ssl-perl,
+         libnet-ldap-perl,
+         libnet-perl,
+         libsocket6-perl,
+         libwww-perl,
+         ${misc:Depends},
+         ${perl:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Recommends: logrotate, rsyslog | system-log-daemon
+Conflicts: libpils0 (<< 2.0.8-3),
+           libstonith0 (<< 2.0.8-3),
+           stonith (<< 2.0.8-3)
+Description: Monitors virtual services provided by LVS
+ ldirectord is a stand-alone daemon to monitor real servers behind
+ virtual services provided by The Linux Virtual Server (LVS).

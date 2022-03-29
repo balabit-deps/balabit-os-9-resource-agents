@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -x
+
+readonly RESOURCE_AGENTS_EXTRA_DIR="debian/resource-agents-extra"
+
+# Those directories were moved to another binary package
+readonly EMPTY_DIRS="etc lib run usr/include usr/lib/heartbeat usr/sbin
+                     usr/share/man/man8 usr/share/pkgconfig usr/lib/tmpfiles.d"
+
+for dir in $EMPTY_DIRS; do
+  rm -rf $RESOURCE_AGENTS_EXTRA_DIR/$dir
+done
