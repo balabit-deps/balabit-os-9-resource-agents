@@ -1,3 +1,10 @@
+resource-agents (1:4.7.0-1ubuntu7.1) jammy; urgency=medium
+
+  * d/control: breaks/replaces for file reorg (LP: #1981598)
+    to un-break upgrades
+
+ -- Christian Ehrhardt <christian.ehrhardt@canonical.com>  Thu, 14 Jul 2022 13:09:42 +0200
+
 resource-agents (1:4.7.0-1ubuntu7) jammy; urgency=medium
 
   * d/DEPRECATED_AGENTS: document the agents deprecated by upstream.

@@ -63,8 +63,10 @@ Recommends: libxml2-utils,
 Suggests: python3-googleapi
 Replaces: cluster-agents (<= 1:1.0.4-1),
           rgmanager (<= 3.0.12-2+b1),
-          resource-agents (<< 1:4.7.0-1ubuntu2)
-Breaks: resource-agents (<< 1:4.7.0-1ubuntu2)
+          resource-agents (<< 1:4.7.0-1ubuntu2),
+          resource-agents-base (<<1:4.7.0-1ubuntu7)
+Breaks: resource-agents (<< 1:4.7.0-1ubuntu2),
+        resource-agents-base (<<1:4.7.0-1ubuntu7)
 Conflicts: cluster-agents (<= 1:1.0.4-1), rgmanager (<= 3.0.12-2+b1)
 Description: Cluster Resource Agents
  This package contains cluster resource agents (RAs) compliant with the Open
@@ -88,8 +90,10 @@ Suggests:
           lvm2
 Replaces: cluster-agents (<= 1:1.0.4-1),
           rgmanager (<= 3.0.12-2+b1),
-          resource-agents (<< 1:4.7.0-1ubuntu2)
-Breaks: resource-agents (<< 1:4.7.0-1ubuntu2)
+          resource-agents (<< 1:4.7.0-1ubuntu2),
+          resource-agents-extra (<<1:4.7.0-1ubuntu7)
+Breaks: resource-agents (<< 1:4.7.0-1ubuntu2),
+        resource-agents-extra (<<1:4.7.0-1ubuntu7)
 Conflicts: cluster-agents (<= 1:1.0.4-1),
            rgmanager (<= 3.0.12-2+b1)
 Description: Cluster Resource Agents curated by Ubuntu
