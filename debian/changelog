@@ -1,3 +1,9 @@
+resource-agents (1:4.7.0-1ubuntu7.1bb1) jammy; urgency=medium
+
+  * xcb: fix concurrent message sending
+
+ -- Balabit Platform Team <devnull@dev.null>  Mon, 26 Jun 2023 23:25:37 +0200
+
 resource-agents (1:4.7.0-1ubuntu7.1) jammy; urgency=medium
 
   * d/control: breaks/replaces for file reorg (LP: #1981598)
