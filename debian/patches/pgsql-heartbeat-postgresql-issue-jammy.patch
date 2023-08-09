@@ -1,0 +1,29 @@
+From 214149d28142e4889e27f6637de8a8508c2f4d27 Mon Sep 17 00:00:00 2001
+From: Andreas Ntaflos <andreas.ntaflos@rise-world.com>
+Date: Thu, 24 Dec 2020 13:57:18 +0100
+Subject: [PATCH] pgsql: make wal receiver check compatible with PostgreSQL >=
+ 11
+
+In PostgreSQL 11 and later the wal receiver process is named
+"walreceiver" instead of "wal receiver process". This change makes the
+check for a running wal receiver process compatible with both variants.
+
+Origin: upstream, https://github.com/ClusterLabs/resource-agents/commit/214149d28142e4889e27f6637de8a8508c2f4d27
+Bug: https://github.com/ClusterLabs/resource-agents/issues/1551
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/resource-agents/+bug/2013084
+Last-Update: 2023-05-03
+---
+ heartbeat/pgsql | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/heartbeat/pgsql
++++ b/heartbeat/pgsql
+@@ -934,7 +934,7 @@
+     local pgsql_real_monitor_status=$1
+ 
+     PID=`head -n 1 $PIDFILE`
+-    receiver_parent_pids=`ps -ef | tr -s " " | grep "[w]al receiver process" | cut -d " " -f 3`
++    receiver_parent_pids=`ps -ef | tr -s " " | grep "[w]al\s*receiver" | cut -d " " -f 3`
+ 
+     if echo "$receiver_parent_pids" | grep -q -w "$PID" ; then
+         attrd_updater -n "$PGSQL_WAL_RECEIVER_STATUS_ATTR" -v "normal" -q

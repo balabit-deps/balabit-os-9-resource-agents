@@ -7,3 +7,4 @@ gitignore.patch
 reproducible.patch
 var-run.patch
 SSBM-332-heartbeat.patch
+pgsql-heartbeat-postgresql-issue-jammy.patch

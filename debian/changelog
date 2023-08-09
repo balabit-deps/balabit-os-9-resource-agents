@@ -1,3 +1,11 @@
+resource-agents (1:4.7.0-1ubuntu7.2) jammy; urgency=medium
+
+  * d/p/pgsql-heartbeat-postgresql-issue-jammy.patch: walreceiver name
+    is changed to make the check for running wal receiver process
+    compatible with PostgreSQL >= 11 (LP: #2013084)
+
+ -- Michal Maloszewski <michal.maloszewski@canonical.com>  Wed, 03 May 2023 10:44:56 +0200
+
 resource-agents (1:4.7.0-1ubuntu7.1bb1) jammy; urgency=medium
 
   * xcb: fix concurrent message sending
