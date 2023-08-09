@@ -1,3 +1,9 @@
+resource-agents (1:4.7.0-1ubuntu7.2bb1) jammy; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Thu, 10 Aug 2023 01:02:12 +0200
+
 resource-agents (1:4.7.0-1ubuntu7.2) jammy; urgency=medium
 
   * d/p/pgsql-heartbeat-postgresql-issue-jammy.patch: walreceiver name
