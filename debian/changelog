@@ -1,3 +1,10 @@
+resource-agents (1:4.7.0-1ubuntu7.3) jammy; urgency=medium
+
+  * d/p/nfs-stop-unmount-fail.patch: report failure when stopping the
+    nfs agent when unmounting operations fail (LP: #2065848)
+
+ -- Athos Ribeiro <athos.ribeiro@canonical.com>  Fri, 20 Sep 2024 11:40:16 -0300
+
 resource-agents (1:4.7.0-1ubuntu7.2) jammy; urgency=medium
 
   * d/p/pgsql-heartbeat-postgresql-issue-jammy.patch: walreceiver name
