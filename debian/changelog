@@ -1,3 +1,9 @@
+resource-agents (1:4.7.0-1ubuntu7.3bb1) jammy; urgency=medium
+
+  * Balabit patched version
+
+ -- Balabit Platform Team <devnull@dev.null>  Sat, 12 Oct 2024 02:24:21 +0000
+
 resource-agents (1:4.7.0-1ubuntu7.3) jammy; urgency=medium
 
   * d/p/nfs-stop-unmount-fail.patch: report failure when stopping the
